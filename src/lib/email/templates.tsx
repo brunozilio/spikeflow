@@ -51,7 +51,6 @@ export function MagicLinkEmail({ url }: MagicLinkEmailProps) {
   );
 }
 
-// Estilos
 const main = {
   backgroundColor: "#ffffff",
   fontFamily:

@@ -87,9 +87,36 @@ export const verification = sqliteTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const project = sqliteTable(
+  "project",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    thumbnail: text("thumbnail"),
+    plan: text("plan", { enum: ["free", "pro"] })
+      .default("free")
+      .notNull(),
+    isArchived: integer("is_archived", { mode: "boolean" })
+      .default(false)
+      .notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp_ms" })
+      .default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [index("project_userId_idx").on(table.userId)],
+);
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
+  projects: many(project),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -102,6 +129,13 @@ export const sessionRelations = relations(session, ({ one }) => ({
 export const accountRelations = relations(account, ({ one }) => ({
   user: one(user, {
     fields: [account.userId],
+    references: [user.id],
+  }),
+}));
+
+export const projectRelations = relations(project, ({ one }) => ({
+  user: one(user, {
+    fields: [project.userId],
     references: [user.id],
   }),
 }));
