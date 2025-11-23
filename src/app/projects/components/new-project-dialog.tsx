@@ -14,35 +14,24 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ProjectPlan } from "@/lib/types/project";
+import { useProjectForm } from "@/hooks/use-project-form";
 import { Plus, Sparkles } from "lucide-react";
-import { useState } from "react";
 
 interface NewProjectDialogProps {
   onCreateProject: (name: string, plan: ProjectPlan) => Promise<void>;
 }
 
 export function NewProjectDialog({ onCreateProject }: NewProjectDialogProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [plan, setPlan] = useState<ProjectPlan>("free");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim()) return;
-
-    setIsLoading(true);
-    try {
-      await onCreateProject(name.trim(), plan);
-      setName("");
-      setPlan("free");
-      setIsOpen(false);
-    } catch (error) {
-      console.error("Erro ao criar projeto:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {
+    isOpen,
+    setIsOpen,
+    name,
+    setName,
+    plan,
+    setPlan,
+    isLoading,
+    handleSubmit,
+  } = useProjectForm(onCreateProject);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
