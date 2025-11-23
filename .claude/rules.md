@@ -43,6 +43,8 @@
 - Use `const` sempre que possível
 - Evite mutações; prefira padrões imutáveis
 - Use early returns para reduzir aninhamento de funções
+- **NUNCA adicione comentários no código**
+- O código deve ser auto-explicativo sem necessidade de comentários
 
 ## Tratamento de Erros
 
@@ -72,8 +74,9 @@
 
 - Não criar arquivos de documentação (README, docs, etc)
 - O código deve ser auto-explicativo
+- Não adicionar comentários no código
 
 ## Idioma
 
 - Todas as telas e mensagens ao usuário devem estar em português
-- Código e comentários podem estar em inglês
+- Código em inglês, sem comentários

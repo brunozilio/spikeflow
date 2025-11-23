@@ -19,7 +19,6 @@ export default function OnboardingPage() {
     setError("");
 
     try {
-      // Atualiza o nome do usuário
       const userResponse = await fetch("/api/user/update-name", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -30,7 +29,6 @@ export default function OnboardingPage() {
         throw new Error("Falha ao atualizar nome");
       }
 
-      // Cria o primeiro projeto
       const projectResponse = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,8 +40,6 @@ export default function OnboardingPage() {
       }
 
       const project = await projectResponse.json();
-
-      // Redireciona para o editor
       router.push(`/editor/${project.id}`);
     } catch (err) {
       setError("Erro ao configurar sua conta. Tente novamente.");

@@ -17,14 +17,13 @@ export async function middleware(request: NextRequest) {
       headers: {
         cookie: request.headers.get("cookie") || "",
       },
-    }
+    },
   );
 
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
   const isAuthRoute = AUTH_ROUTES.includes(pathname);
   const isOnboarding = pathname === ONBOARDING_ROUTE;
 
-  // Redireciona usuário autenticado para fora de rotas de auth
   if (session && isAuthRoute) {
     if (!session.user.name || session.user.name.trim() === "") {
       return NextResponse.redirect(new URL(ONBOARDING_ROUTE, request.url));
@@ -32,12 +31,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/projects", request.url));
   }
 
-  // Redireciona usuário não autenticado para login
   if (!session && !isPublicRoute) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Redireciona usuário sem nome para onboarding
   if (
     session &&
     !isOnboarding &&
@@ -46,8 +43,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(ONBOARDING_ROUTE, request.url));
   }
 
-  // Redireciona usuário com nome para fora do onboarding
-  if (session && isOnboarding && session.user.name && session.user.name.trim() !== "") {
+  if (
+    session &&
+    isOnboarding &&
+    session.user.name &&
+    session.user.name.trim() !== ""
+  ) {
     return NextResponse.redirect(new URL("/projects", request.url));
   }
 
