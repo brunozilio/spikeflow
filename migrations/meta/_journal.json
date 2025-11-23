@@ -8,6 +8,27 @@
       "when": 1763918496661,
       "tag": "0000_big_morph",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1763925853100,
+      "tag": "0001_marvelous_the_phantom",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1763926063446,
+      "tag": "0002_sticky_paper_doll",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1763926319147,
+      "tag": "0003_dark_silverclaw",
+      "breakpoints": true
     }
   ]
 }
